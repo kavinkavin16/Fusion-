@@ -1,0 +1,244 @@
+<SQL_EXPLAIN_PLAN>
+<DATA_DS>
+<![CDATA[
+               Datamodel SQL Explain Plan Report             
+================================================================
+Driver Details:JDBC Driver:Oracle JDBC driver:weblogic.jdbc.wrapper.PoolConnection_oracle_jdbc_driver_T4CConnection:11.2.0.3.0
+DBName:Oracle 
+DBVersion:Oracle Database 12c EE Extreme Perf Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, Real Application Clusters, Automatic Storage Management, Oracle Label Security,
+OLAP, Advanced Analytics and Real Application Testing options
+SQLQuery:EXPLAIN PLAN SET STATEMENT_ID = 'dm_plan_Q_210623_072115' FOR 
+SELECT  /* QUERY_SRC('datamodel: _datamodel.xdm,dataset:Q') */  A.CUSTOMER_TRX_ID,
+A.CREATION_DATE,
+A.TRX_NUMBER,
+A.INVOICE_CURRENCY_CODE,
+A.ORG_ID,
+B.LOCATION_ID,
+B.NAME,
+C.CUST_ACCOUNT_ID,
+C.ACCOUNT_NUMBER,
+C.ACCOUNT_NAME,
+D.COUNTRY AS C_CON,
+D.ADDRESS1 AS C_ADD,
+D.CITY AS C_CITY,
+D.POSTAL_CODE AS C_CODE,
+E.ADDRESS_LINE_1,
+E.TOWN_OR_CITY,
+E.POSTAL_CODE,
+E.COUNTRY
+
+FROM RA_CUSTOMER_TRX_ALL A,
+HR_ALL_ORGANIZATION_UNITS B,
+HZ_CUST_ACCOUNTS C,
+HZ_PARTIES D,
+HR_BU_LOCATIONS_X E
+
+WHERE A.ORG_ID = B.ORGANIZATION_ID
+AND A.SOLD_TO_CUSTOMER_ID = C.CUST_ACCOUNT_ID
+AND C.ACCOUNT_NAME = D.PARTY_NAME
+AND B.LOCATION_ID = E.LOCATION_ID
+AND A.ORG_ID = 300000048716539
+SQL Query Timeout: 600
+Number of SQL Executions: 1
+PLAN_TABLE_OUTPUT
+-----------------------------------------------------------------------------------------------------
+Plan hash value: 678446207
+ 
+---------------------------------------------------------------------------------------------------------------------------------
+| Id  | Operation                                       | Name                          | Rows  | Bytes | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT                                |                               |     1 |   422 |  8543   (1)| 00:00:01 |
+|*  1 |  FILTER                                         |                               |       |       |            |          |
+|*  2 |   HASH JOIN RIGHT OUTER                         |                               |  2765 |  1139K|  3393   (1)| 00:00:01 |
+|*  3 |    TABLE ACCESS STORAGE FULL                    | fnd_setid_assignments         |   122 |  4514 |   104   (0)| 00:00:01 |
+|*  4 |    HASH JOIN                                    |                               |  2221 |   835K|  3289   (1)| 00:00:01 |
+|   5 |     JOIN FILTER CREATE                          | :BF0000                       |  1536 |   502K|  3079   (1)| 00:00:01 |
+|*  6 |      HASH JOIN                                  |                               |  1536 |   502K|  3079   (1)| 00:00:01 |
+|   7 |       TABLE ACCESS STORAGE FULL                 | hz_cust_accounts              |   189 |  6804 |     6   (0)| 00:00:01 |
+|*  8 |       HASH JOIN                                 |                               |  1536 |   448K|  3073   (1)| 00:00:01 |
+|   9 |        NESTED LOOPS                             |                               |     1 |   256 |    10   (0)| 00:00:01 |
+|  10 |         NESTED LOOPS                            |                               |     1 |   256 |    10   (0)| 00:00:01 |
+|  11 |          NESTED LOOPS                           |                               |     1 |   224 |     9   (0)| 00:00:01 |
+|  12 |           NESTED LOOPS                          |                               |     1 |   201 |     8   (0)| 00:00:01 |
+|  13 |            NESTED LOOPS                         |                               |     1 |   136 |     7   (0)| 00:00:01 |
+|  14 |             NESTED LOOPS                        |                               |     1 |    87 |     5   (0)| 00:00:01 |
+|* 15 |              TABLE ACCESS BY INDEX ROWID BATCHED| hr_organization_units_f_tl    |     1 |    50 |     4   (0)| 00:00:01 |
+|* 16 |               INDEX RANGE SCAN                  | HR_ORGANIZATION_UNITS_F_TL_PK |     1 |       |     3   (0)| 00:00:01 |
+|* 17 |              TABLE ACCESS BY INDEX ROWID        | hr_all_organization_units_f   |     1 |    37 |     1   (0)| 00:00:01 |
+|* 18 |               INDEX UNIQUE SCAN                 | HR_ALL_ORGANIZATION_UNITS_PK  |     1 |       |     0   (0)| 00:00:01 |
+|* 19 |             TABLE ACCESS BY INDEX ROWID BATCHED | per_location_details_f        |     1 |    49 |     2   (0)| 00:00:01 |
+|* 20 |              INDEX RANGE SCAN                   | PER_LOCATION_DETAILS_F1       |     1 |       |     1   (0)| 00:00:01 |
+|  21 |            TABLE ACCESS BY INDEX ROWID          | per_addresses_f               |     1 |    65 |     1   (0)| 00:00:01 |
+|* 22 |             INDEX UNIQUE SCAN                   | PER_ADDRESSES_F_PK            |     1 |       |     0   (0)| 00:00:01 |
+|* 23 |           TABLE ACCESS BY INDEX ROWID           | per_locations                 |     1 |    23 |     1   (0)| 00:00:01 |
+|* 24 |            INDEX UNIQUE SCAN                    | PER_LOCATIONS_PK              |     1 |       |     0   (0)| 00:00:01 |
+|* 25 |          INDEX UNIQUE SCAN                      | PER_LOCATION_DETAILS_TL_PK    |     1 |       |     0   (0)| 00:00:01 |
+|* 26 |         TABLE ACCESS BY INDEX ROWID             | per_location_details_f_tl     |     1 |    32 |     1   (0)| 00:00:01 |
+|* 27 |        TABLE ACCESS STORAGE FULL                | ra_customer_trx_all           |  2181 | 93783 |  3063   (1)| 00:00:01 |
+|  28 |     JOIN FILTER USE                             | :BF0000                       | 10985 |   536K|   210   (1)| 00:00:01 |
+|* 29 |      TABLE ACCESS STORAGE FULL                  | hz_parties                    | 10985 |   536K|   210   (1)| 00:00:01 |
+|* 30 |   FILTER                                        |                               |       |       |            |          |
+|* 31 |    TABLE ACCESS BY INDEX ROWID BATCHED          | per_person_addr_usages_f      |     1 |    23 |     2   (0)| 00:00:01 |
+|* 32 |     INDEX RANGE SCAN                            | PER_PERSON_ADDR_USAGES_F_FK3  |     1 |       |     1   (0)| 00:00:01 |
+|  33 |    UNION-ALL                                    |                               |       |       |            |          |
+|* 34 |     TABLE ACCESS BY INDEX ROWID                 | per_persons                   |     1 |    13 |     2   (0)| 00:00:01 |
+|* 35 |      INDEX UNIQUE SCAN                          | PER_PERSONS_PK                |     1 |       |     1   (0)| 00:00:01 |
+|* 36 |       COUNT STOPKEY                             |                               |       |       |            |          |
+|* 37 |        TABLE ACCESS BY INDEX ROWID BATCHED      | per_person_addr_usages_f      |     1 |    23 |     2   (0)| 00:00:01 |
+|* 38 |         INDEX RANGE SCAN                        | PER_PERSON_ADDR_USAGES_F_FK3  |     1 |       |     1   (0)| 00:00:01 |
+|  39 |       FAST DUAL                                 |                               |     1 |       |     2   (0)| 00:00:01 |
+|  40 |     NESTED LOOPS ANTI                           |                               |     1 |    65 |     5   (0)| 00:00:01 |
+|  41 |      NESTED LOOPS                               |                               |     1 |    52 |     3   (0)| 00:00:01 |
+|* 42 |       TABLE ACCESS BY INDEX ROWID               | per_persons                   |     1 |    13 |     2   (0)| 00:00:01 |
+|* 43 |        INDEX UNIQUE SCAN                        | PER_PERSONS_PK                |     1 |       |     1   (0)| 00:00:01 |
+|  44 |         FAST DUAL                               |                               |     1 |       |     2   (0)| 00:00:01 |
+|* 45 |       TABLE ACCESS BY INDEX ROWID BATCHED       | per_contact_relships_f        |     1 |    39 |     1   (0)| 00:00:01 |
+|* 46 |        INDEX RANGE SCAN                         | PER_CONTACT_RELSHIPS_F_N3     |     1 |       |     0   (0)| 00:00:01 |
+|* 47 |         COUNT STOPKEY                           |                               |       |       |            |          |
+|* 48 |          TABLE ACCESS BY INDEX ROWID BATCHED    | per_person_addr_usages_f      |     1 |    23 |     2   (0)| 00:00:01 |
+|* 49 |           INDEX RANGE SCAN                      | PER_PERSON_ADDR_USAGES_F_FK3  |     1 |       |     1   (0)| 00:00:01 |
+|* 50 |      TABLE ACCESS BY INDEX ROWID BATCHED        | per_periods_of_service        |  4163 | 54119 |     2   (0)| 00:00:01 |
+|* 51 |       INDEX RANGE SCAN                          | PER_PERIODS_OF_SERVICE_N3     |     1 |       |     1   (0)| 00:00:01 |
+|* 52 |    TABLE ACCESS BY INDEX ROWID                  | per_persons                   |     1 |    13 |     2   (0)| 00:00:01 |
+|* 53 |     INDEX UNIQUE SCAN                           | PER_PERSONS_PK                |     1 |       |     1   (0)| 00:00:01 |
+|* 54 |      COUNT STOPKEY                              |                               |       |       |            |          |
+|* 55 |       TABLE ACCESS BY INDEX ROWID BATCHED       | per_person_addr_usages_f      |     1 |    23 |     2   (0)| 00:00:01 |
+|* 56 |        INDEX RANGE SCAN                         | PER_PERSON_ADDR_USAGES_F_FK3  |     1 |       |     1   (0)| 00:00:01 |
+|  57 |      FAST DUAL                                  |                               |     1 |       |     2   (0)| 00:00:01 |
+|  58 |    NESTED LOOPS ANTI                            |                               |     1 |    26 |     4   (0)| 00:00:01 |
+|* 59 |     TABLE ACCESS BY INDEX ROWID BATCHED         | per_contact_relships_f        |     1 |    13 |     2   (0)| 00:00:01 |
+|* 60 |      INDEX RANGE SCAN                           | PER_CONTACT_RELSHIPS_F_N3     |     1 |       |     1   (0)| 00:00:01 |
+|* 61 |     TABLE ACCESS BY INDEX ROWID BATCHED         | per_periods_of_service        |     1 |    13 |     2   (0)| 00:00:01 |
+|* 62 |      INDEX RANGE SCAN                           | PER_PERIODS_OF_SERVICE_N3     |     1 |       |     1   (0)| 00:00:01 |
+|* 63 |   TABLE ACCESS BY INDEX ROWID BATCHED           | per_person_addr_usages_f      |     1 |    13 |     2   (0)| 00:00:01 |
+|* 64 |    INDEX RANGE SCAN                             | PER_PERSON_ADDR_USAGES_F_FK3  |     1 |       |     1   (0)| 00:00:01 |
+---------------------------------------------------------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   1 - filter( EXISTS (SELECT 0 FROM "FUSION"."per_person_addr_usages_f" "per_person_addr_usages_f" WHERE ( EXISTS ( 
+              (SELECT 1 FROM "FUSION"."per_persons" "per_persons" WHERE "PERSON_ID"= (SELECT 
+              NVL("HRC_SESSION_UTIL"."GET_USER_PERSONID"(),(-1)) FROM "SYS"."DUAL" "DUAL") AND (("BUSINESS_GROUP_ID"=0 OR 
+              "BUSINESS_GROUP_ID"=1) OR "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_
+              ID",TO_NUMBER(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID')))) AND "PERSON_ID"= (SELECT "PERSON_ID" FROM 
+              "FUSION"."per_person_addr_usages_f" "per_person_addr_usages_f" WHERE ROWNUM=1 AND "ADDRESS_ID"=:B1 AND 
+              (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE
+              _ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID')))))) UNION ALL  (SELECT /*+ <not 
+              feasible>)
+   2 - access("SET_ID"="SET_ID"(+))
+   3 - storage("REFERENCE_GROUP_NAME"(+)='PER_LOCATIONS' AND "DETERMINANT_TYPE"(+)='BU' AND "ENTERPRISE_ID"(+)=1)
+       filter("REFERENCE_GROUP_NAME"(+)='PER_LOCATIONS' AND "DETERMINANT_TYPE"(+)='BU' AND "ENTERPRISE_ID"(+)=1)
+   4 - access("C"."ACCOUNT_NAME"="PARTY_NAME")
+   6 - access("A"."SOLD_TO_CUSTOMER_ID"="C"."CUST_ACCOUNT_ID")
+   8 - access("A"."ORG_ID"="ORGANIZATION_ID")
+  15 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  16 - access("ORGANIZATION_ID"=300000048716539 AND "LANGUAGE"=USERENV('LANG') AND 
+              "EFFECTIVE_END_DATE">=TRUNC(SYSDATE@!) AND "EFFECTIVE_START_DATE"<=TRUNC(SYSDATE@!))
+       filter("EFFECTIVE_END_DATE">=TRUNC(SYSDATE@!))
+  17 - filter("LOCATION_ID" IS NOT NULL AND (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID')))))
+  18 - access("ORGANIZATION_ID"=300000048716539 AND "EFFECTIVE_START_DATE"="EFFECTIVE_START_DATE" AND 
+              "EFFECTIVE_END_DATE"="EFFECTIVE_END_DATE")
+       filter("EFFECTIVE_END_DATE">=TRUNC(SYSDATE@!) AND "EFFECTIVE_START_DATE"<=TRUNC(SYSDATE@!))
+  19 - filter("EFFECTIVE_END_DATE">=TRUNC(SYSDATE@!) AND "EFFECTIVE_START_DATE"<=TRUNC(SYSDATE@!) AND 
+              (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE
+              _ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID')))))
+  20 - access("LOCATION_ID"="LOCATION_ID")
+  22 - access("MAIN_ADDRESS_ID"="ADDRESS_ID" AND "EFFECTIVE_START_DATE"="EFFECTIVE_START_DATE" AND 
+              "EFFECTIVE_END_DATE"="EFFECTIVE_END_DATE")
+       filter("EFFECTIVE_END_DATE">=TRUNC(SYSDATE@!) AND "EFFECTIVE_START_DATE"<=TRUNC(SYSDATE@!))
+  23 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  24 - access("LOCATION_ID"="LOCATION_ID")
+  25 - access("LOCATION_DETAILS_ID"="LOCATION_DETAILS_ID" AND "EFFECTIVE_START_DATE"="EFFECTIVE_START_DATE" AND 
+              "EFFECTIVE_END_DATE"="EFFECTIVE_END_DATE" AND "LANGUAGE"=USERENV('LANG'))
+       filter("EFFECTIVE_END_DATE">=TRUNC(SYSDATE@!) AND "EFFECTIVE_START_DATE"<=TRUNC(SYSDATE@!))
+  26 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  27 - storage("A"."SOLD_TO_CUSTOMER_ID" IS NOT NULL AND "A"."ORG_ID"=300000048716539)
+       filter("A"."SOLD_TO_CUSTOMER_ID" IS NOT NULL AND "A"."ORG_ID"=300000048716539)
+  29 - storage(SYS_OP_BLOOM_FILTER(:BF0000,"PARTY_NAME"))
+       filter(SYS_OP_BLOOM_FILTER(:BF0000,"PARTY_NAME"))
+  30 - filter( EXISTS ( (SELECT 1 FROM "FUSION"."per_persons" "per_persons" WHERE "PERSON_ID"= (SELECT 
+              NVL("HRC_SESSION_UTIL"."GET_USER_PERSONID"(),(-1)) FROM "SYS"."DUAL" "DUAL") AND (("BUSINESS_GROUP_ID"=0 OR 
+              "BUSINESS_GROUP_ID"=1) OR "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_
+              ID",TO_NUMBER(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID')))) AND "PERSON_ID"= (SELECT "PERSON_ID" FROM 
+              "FUSION"."per_person_addr_usages_f" "per_person_addr_usages_f" WHERE ROWNUM=1 AND "ADDRESS_ID"=:B1 AND 
+              (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE
+              _ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID')))))) UNION ALL  (SELECT /*+ <not 
+              feasible>)
+  31 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  32 - access("ADDRESS_ID"=:B1)
+  34 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  35 - access("PERSON_ID"= (SELECT NVL("HRC_SESSION_UTIL"."GET_USER_PERSONID"(),(-1)) FROM "SYS"."DUAL" "DUAL"))
+       filter("PERSON_ID"= (SELECT "PERSON_ID" FROM "FUSION"."per_person_addr_usages_f" "per_person_addr_usages_f" WHERE 
+              ROWNUM=1 AND "ADDRESS_ID"=:B1 AND (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))))
+  36 - filter(ROWNUM=1)
+  37 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  38 - access("ADDRESS_ID"=:B1)
+  42 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  43 - access("PERSON_ID"= (SELECT NVL("HRC_SESSION_UTIL"."GET_USER_PERSONID"(),(-1)) FROM "SYS"."DUAL" "DUAL"))
+  45 - filter("PERSON_ID"="PERSON_ID" AND "EFFECTIVE_END_DATE">=TRUNC(SYSDATE@!) AND 
+              "EFFECTIVE_START_DATE"<=TRUNC(SYSDATE@!) AND (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID')))))
+  46 - access("CONTACT_PERSON_ID"= (SELECT "PERSON_ID" FROM "FUSION"."per_person_addr_usages_f" 
+              "per_person_addr_usages_f" WHERE ROWNUM=1 AND "ADDRESS_ID"=:B1 AND (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))))
+  47 - filter(ROWNUM=1)
+  48 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  49 - access("ADDRESS_ID"=:B1)
+  50 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  51 - access("PERSON_ID"="CONTACT_PERSON_ID")
+  52 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  53 - access("PERSON_ID"= (SELECT NVL("HRC_SESSION_UTIL"."GET_USER_PERSONID"(),(-1)) FROM "SYS"."DUAL" "DUAL"))
+       filter("PERSON_ID"= (SELECT "PERSON_ID" FROM "FUSION"."per_person_addr_usages_f" "per_person_addr_usages_f" WHERE 
+              ROWNUM=1 AND "ADDRESS_ID"=:B1 AND (("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1) OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))))
+  54 - filter(ROWNUM=1)
+  55 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  56 - access("ADDRESS_ID"=:B1)
+  59 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  60 - access("CONTACT_PERSON_ID"=:B1)
+  61 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  62 - access("PERSON_ID"=:B1)
+       filter("PERSON_ID"="CONTACT_PERSON_ID")
+  63 - filter("BUSINESS_GROUP_ID"=0 OR "BUSINESS_GROUP_ID"=1 OR 
+              "BUSINESS_GROUP_ID"=DECODE(SYS_CONTEXT('FND_VPD_CTX','FND_ENTERPRISE_ID'),NULL,"BUSINESS_GROUP_ID",TO_NUMBER(SYS_CONTEXT(
+              'FND_VPD_CTX','FND_ENTERPRISE_ID'))))
+  64 - access("ADDRESS_ID"=:B1)
+
+]]>
+</DATA_DS>
+</SQL_EXPLAIN_PLAN>
