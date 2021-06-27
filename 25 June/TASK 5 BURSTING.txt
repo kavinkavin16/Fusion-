@@ -1,0 +1,205 @@
+SELECT 
+CUSTOMER_TRX_ID KEY,                      
+'Task5_layout' TEMPLATE,           
+:xdo_user_report_locale  LOCALE,                        
+'PDF'             OUTPUT_FORMAT,                        
+'EMAIL'           DEL_CHANNEL,                   
+'AR INVOICE_'||trx_number OUTPUT_NAME,         
+’prithiviraj.sundar@chainsys.com’   parameter1,         
+'kavinnaresh.rengaraj@chainsys.com'   parameter2,         
+‘do.not.reply@chainsys.com’   parameter3,         
+‘Bursting Program testing’           parameter4,         
+‘Dear Customer PFA Attachment’  parameter5,          
+‘true’          parameter6,          
+‘Reply-To’        parameter7,          
+--‘roopa.ramachandran@chainsys.com@gmail.com’   parameter8          
+FROM (
+SELECT DISTINCT A.CUSTOMER_TRX_ID
+FROM
+RA_CUSTOMER_TRX_ALL A,
+HR_ALL_ORGANIZATION_UNITS B,
+HZ_CUST_ACCOUNTS C,
+HZ_PARTIES D,
+HR_BU_LOCATIONS_X E
+WHERE 
+A.ORG_ID = B.ORGANIZATION_ID	
+AND A.SOLD_TO_CUSTOMER_ID = C.CUST_ACCOUNT_ID
+AND C.ACCOUNT_NAME = D.PARTY_NAME
+AND B.LOCATION_ID = E.LOCATION_ID
+AND C.CUST_ACCOUNT_ID IN (300000047448124,300000047394542,300000047461296,
+AND A.ORG_ID IN (300000046987012,300000047498175,300000047568131,300000047826657)
+300000047394603,300000047368610,300000047368646,300000048196111,300000047886154)
+AND
+A.CUSTOMER_TRX_ID IN (55890,55825,300000071652226,58679,73944,41760,300000076330652,300000076330665))
+
+
+
+
+HARDCODED FOR BURSTING:)
+AND C.CUST_ACCOUNT_ID IN (300000047692111,300000047692196,300000047394527)
+AND D.EMAIL_ADDRESS IN ('mary.whitaker_esfd-dev30@oraclepdemos.com','john.lee_esfd-dev30@oraclepdemos.com','contact_esfd-dev30@oraclepdemos.com')
+AND A.CUSTOMER_TRX_ID IN (4009,4042,9417)
+--=============================
+SELECT 
+CUSTOMER_TRX_ID KEY,                      
+'Task5_layout' TEMPLATE,           
+:xdo_user_report_locale  LOCALE,                        
+'PDF'             OUTPUT_FORMAT,                        
+'EMAIL'           DEL_CHANNEL,                   
+'AR INVOICE_'||CUSTOMER_TRX_ID OUTPUT_NAME,         
+’prithiviraj.sundar@chainsys.com’   parameter1,         
+'kavinnaresh.rengaraj@chainsys.com'   parameter2,         
+‘do.not.reply@chainsys.com’   parameter3,         
+‘Bursting Program testing’           parameter4,         
+‘Dear Customer PFA Attachment’  parameter5,          
+‘true’          parameter6,          
+‘Reply-To’        parameter7,          
+‘roopa.ramachandran@chainsys.com@gmail.com’   parameter8          
+FROM(
+SELECT
+A.CUSTOMER_TRX_ID
+FROM
+RA_CUSTOMER_TRX_ALL A,
+HR_ALL_ORGANIZATION_UNITS B,
+HZ_CUST_ACCOUNTS C,
+HZ_PARTIES D,
+HR_BU_LOCATIONS_X E
+WHERE
+A.ORG_ID = B.ORGANIZATION_ID
+AND A.SOLD_TO_CUSTOMER_ID = C.CUST_ACCOUNT_ID
+AND C.ACCOUNT_NAME = D.PARTY_NAME
+AND B.LOCATION_ID = E.LOCATION_ID
+AND A.ORG_ID IN (300000046987012,300000047498175,300000047568131,300000047826657)
+AND C.CUST_ACCOUNT_ID IN (300000047692111,300000047692196,300000047394527)
+AND D.EMAIL_ADDRESS IN ('mary.whitaker_esfd-dev30@oraclepdemos.com','john.lee_esfd-dev30@oraclepdemos.com','contact_esfd-dev30@oraclepdemos.com')
+AND A.CUSTOMER_TRX_ID IN (4009,4042,9417))
+
+================================================
+SELECT 
+A.CUSTOMER_TRX_ID AS KEY,                      
+'Task5_layout' AS TEMPLATE,
+'RTF' TEMPLATE_FORMAT,           
+'en-US' LOCALE,                        
+'PDF' OUTPUT_FORMAT,                        
+'EMAIL' DEL_CHANNEL,                   
+'AR INVOICE_'||A.CUSTOMER_TRX_ID OUTPUT_NAME,         
+'prithiviraj.sundar@chainsys.com' parameter1,         
+'kavinnaresh.rengaraj@chainsys.com' parameter2,         
+'do.not.reply@chainsys.com' parameter3,         
+'Bursting Program testing' parameter4,         
+'Dear Customer PFA Attachment' parameter5,          
+'true' parameter6,          
+'Reply-To' parameter7,
+'roopa.ramachandran@chainsys.com@gmail.com' parameter8          
+FROM 
+RA_CUSTOMER_TRX_ALL A,
+HR_ALL_ORGANIZATION_UNITS B,
+HZ_CUST_ACCOUNTS C,
+HZ_PARTIES D,
+HR_BU_LOCATIONS_X E
+WHERE
+A.ORG_ID = B.ORGANIZATION_ID
+AND A.SOLD_TO_CUSTOMER_ID = C.CUST_ACCOUNT_ID
+AND C.ACCOUNT_NAME = D.PARTY_NAME
+AND B.LOCATION_ID = E.LOCATION_ID
+AND A.ORG_ID IN (300000046987012,300000047498175,300000047568131,300000047826657)
+AND C.CUST_ACCOUNT_ID IN (300000047692111,300000047692196,300000047394527)
+AND D.EMAIL_ADDRESS IN ('mary.whitaker_esfd-dev30@oraclepdemos.com','john.lee_esfd-dev30@oraclepdemos.com','contact_esfd-dev30@oraclepdemos.com')
+AND A.CUSTOMER_TRX_ID IN (4009,4042,9417)
+
+
+
+-==============================
+SELECT 
+A.CUSTOMER_TRX_ID AS KEY,                      
+'Task5_layout' AS TEMPLATE,
+'RTF' TEMPLATE_FORMAT,           
+'en-US' LOCALE,                        
+'PDF' OUTPUT_FORMAT,                        
+'EMAIL' DEL_CHANNEL,                   
+'AR INVOICE_'||A.CUSTOMER_TRX_ID OUTPUT_NAME,         
+D.EMAIL_ADDRESS parameter1,         
+'kavinnaresh.rengaraj@chainsys.com' parameter2,         
+'prithiviraj.sundar@chainsys.com' parameter3,         
+'Bursting Program testing' parameter4,         
+'Dear Customer PFA Attachment' parameter5,          
+'true' parameter6,          
+'Reply-To' parameter7,
+'roopa.ramachandran@chainsys.com@gmail.com' parameter8          
+FROM 
+RA_CUSTOMER_TRX_ALL A,
+HR_ALL_ORGANIZATION_UNITS B,
+HZ_CUST_ACCOUNTS C,
+HZ_PARTIES D,
+HR_BU_LOCATIONS_X E
+WHERE
+A.ORG_ID = B.ORGANIZATION_ID
+AND A.SOLD_TO_CUSTOMER_ID = C.CUST_ACCOUNT_ID
+AND C.ACCOUNT_NAME = D.PARTY_NAME
+AND B.LOCATION_ID = E.LOCATION_ID
+AND A.ORG_ID IN (300000046987012,300000047498175,300000047568131,300000047826657)
+AND C.CUST_ACCOUNT_ID IN (300000047692111,300000047692196,300000047394527)
+AND D.EMAIL_ADDRESS IN ('mary.whitaker_esfd-dev30@oraclepdemos.com','john.lee_esfd-dev30@oraclepdemos.com')
+AND A.CUSTOMER_TRX_ID IN (4009,4042)	
+
+
+
+
+============================
+SELECT 
+A.ORDER_NUMBER AS KEY,
+'TASK5' AS TEMPLATE,
+'RTF' TEMPLATE_FORMAT,
+'EN-US' LOCALE,
+'PDF' OUTPUT_FORMAT,
+'EMAIL' DEL_CHANNEL,
+'ORDER_NUMBER_'||A.ORDER_NUMBER OUTPUT_NAME,
+C.EMAIL_ADDRESS PARAMETER1,
+'KAVIN.RENGARAJ@CHAINSYS.COM' PARAMETER2,
+'HARINIROOPA5@GMAIL.COM' PARAMETER3,
+'REG TASK5' PARAMETER4,
+'HAI MAIL FROM ROOPA CHAINSYS' PARAMETER5,
+'true'  PARAMETER6
+from doo_headers_all a,
+hz_cust_accounts b,
+hz_parties c
+where a.sold_to_customer_id = b.cust_account_id
+and b.account_name = c.party_name
+and a.order_number in (65352,65376)
+AND C.EMAIL_ADDRESS IN ('john.lee_esfd-dev30@oraclepdemos.com','mary.whitaker_esfd-dev30@oraclepdemos.com')
+
+
+===========================
+
+
+SELECT 
+A.CUSTOMER_TRX_ID AS KEY,                      
+'customertest' AS TEMPLATE,
+'RTF' TEMPLATE_FORMAT,           
+'en-US' LOCALE,                        
+'PDF' OUTPUT_FORMAT,                        
+'EMAIL' DEL_CHANNEL,                   
+'AR INVOICE_'||A.CUSTOMER_TRX_ID OUTPUT_NAME,         
+D.EMAIL_ADDRESS parameter1,         
+'kavinnaresh.rengaraj@chainsys.com' parameter2,         
+'prithiviraj.sundar@chainsys.com' parameter3,         
+'Bursting Program testing' parameter4,         
+'Dear Customer PFA Attachment' parameter5,          
+'true' parameter6,          
+'Reply-To' parameter7,
+--'roopa.ramachandran@chainsys.com' parameter8          
+FROM 
+AND A.CUSTOMER_TRX_ID IN (75853,55260)
+RA_CUSTOMER_TRX_ALL A,
+HR_ALL_ORGANIZATION_UNITS B,
+HZ_CUST_ACCOUNTS C,
+HZ_PARTIES D,
+HR_BU_LOCATIONS_X E
+WHERE
+A.ORG_ID = B.ORGANIZATION_ID
+AND A.SOLD_TO_CUSTOMER_ID = C.CUST_ACCOUNT_ID
+AND C.ACCOUNT_NAME = D.PARTY_NAME
+AND B.LOCATION_ID = E.LOCATION_ID
+AND A.ORG_ID IN (300000046987012,300000047498175,300000047568131,300000047826657)
+AND C.CUST_ACCOUNT_ID IN (300000047692111,300000047692196,300000047394527)
+AND D.EMAIL_ADDRESS IN ('mary.whitaker_esfd-dev30@oraclepdemos.com','john.lee_esfd-dev30@oraclepdemos.com')
